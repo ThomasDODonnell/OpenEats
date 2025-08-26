@@ -26,7 +26,8 @@
       "mcp__archon__search_code_examples",
       "mcp__archon__get_available_sources",
       "WebSearch",
-      "mcp__archon__create_task"
+      "mcp__archon__create_task",
+      "mcp__archon__update_task"
     ],
     "deny": []
   }

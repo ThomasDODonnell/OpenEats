@@ -1,296 +1,270 @@
-# Context Engineering Template
+# 🍳 GoodEats Recipe PWA
 
-A comprehensive template for getting started with Context Engineering - the discipline of engineering context for AI coding assistants so they have the information necessary to get the job done end to end.
+A modern Progressive Web Application for recipe management with social features, built with FastAPI, React, and PostgreSQL.
 
-> **Context Engineering is 10x better than prompt engineering and 100x better than vibe coding.**
+## 🚀 Features
+
+- **👤 User Authentication** - Secure JWT-based authentication system
+- **📖 Recipe Management** - Create, edit, and share recipes with ingredients and instructions
+- **🏷️ Smart Tagging** - Categorized tag system (dietary, cuisine, difficulty, etc.)
+- **⭐ Community Voting** - Upvote/downvote system for recipe discovery
+- **🔍 Advanced Search** - Filter by tags, cooking time, author, and text search
+- **🛒 Shopping Lists** - Generate shopping lists from multiple recipes (planned)
+- **📱 PWA Support** - Installable with offline capabilities (planned)
+- **🎨 Responsive Design** - Mobile-first design with Tailwind CSS (planned)
+
+## 🛠️ Tech Stack
+
+### Backend
+- **FastAPI** - Modern, fast web framework for building APIs
+- **SQLAlchemy 2.0** - Async ORM with proper relationship management
+- **PostgreSQL** - Production database with advanced querying
+- **Alembic** - Database migrations and schema management
+- **Pydantic** - Data validation and settings management
+- **JWT** - Secure authentication tokens
+- **Docker** - Containerization for development and deployment
+
+### Frontend (Planned)
+- **React 18** - Modern React with hooks and context
+- **TypeScript** - Type-safe development
+- **Vite** - Fast build tool and development server
+- **Tailwind CSS** - Utility-first CSS framework
+- **Flowbite** - Component library for consistent UI
+- **PWA** - Service workers for offline support
+
+## 📋 Current Implementation Status
+
+### ✅ Completed Backend Features
+
+- [x] **Project Structure** - Complete backend architecture
+- [x] **Database Models** - User, Recipe, Tag, Vote, ShoppingList models
+- [x] **Authentication API** - Register, login, token management
+- [x] **User Management** - Profile CRUD operations
+- [x] **Recipe API** - Full CRUD with advanced filtering
+- [x] **Tag System** - Categorized tags with popularity tracking
+- [x] **Voting System** - Atomic upvote/downvote with aggregation
+- [x] **Search & Filter** - Multi-criteria recipe filtering
+- [x] **API Documentation** - Interactive OpenAPI/Swagger docs
+
+### 🔄 In Progress
+
+- [ ] Shopping list generation from recipes
+- [ ] Frontend React application
+- [ ] PWA configuration and service workers
+- [ ] Docker containerization
+- [ ] Comprehensive test suite
+
+## 🏗️ Project Structure
+
+```
+GoodEats/
+├── backend/
+│   ├── app/
+│   │   ├── api/          # API endpoints
+│   │   │   ├── auth.py   # Authentication endpoints
+│   │   │   ├── users.py  # User management
+│   │   │   ├── recipes.py # Recipe CRUD with filtering
+│   │   │   ├── tags.py   # Tag management
+│   │   │   └── votes.py  # Voting system
+│   │   ├── config/       # Configuration management
+│   │   ├── core/         # Security and exceptions
+│   │   ├── models/       # SQLAlchemy database models
+│   │   ├── schemas/      # Pydantic validation schemas
+│   │   └── utils/        # Utility functions
+│   ├── alembic/          # Database migrations
+│   ├── tests/            # Test suite
+│   └── requirements.txt  # Python dependencies
+├── frontend/             # React PWA (planned)
+├── .env.example          # Environment configuration template
+└── README.md            # This file
+```
 
 ## 🚀 Quick Start
 
-```bash
-# 1. Clone this template
-git clone https://github.com/coleam00/Context-Engineering-Intro.git
-cd Context-Engineering-Intro
+### Prerequisites
 
-# 2. Set up your project rules (optional - template provided)
-# Edit CLAUDE.md to add your project-specific guidelines
+- Python 3.11+
+- PostgreSQL 14+ (or SQLite for development)
+- Node.js 18+ (for frontend, when implemented)
 
-# 3. Add examples (highly recommended)
-# Place relevant code examples in the examples/ folder
+### Backend Setup
 
-# 4. Create your initial feature request
-# Edit INITIAL.md with your feature requirements
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd GoodEats
+   ```
 
-# 5. Generate a comprehensive PRP (Product Requirements Prompt)
-# In Claude Code, run:
-/generate-prp INITIAL.md
+2. **Set up Python environment**
+   ```bash
+   cd backend
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   pip install -r requirements.txt
+   ```
 
-# 6. Execute the PRP to implement your feature
-# In Claude Code, run:
-/execute-prp PRPs/your-feature-name.md
-```
+3. **Configure environment**
+   ```bash
+   cp ../.env.example .env
+   # Edit .env with your database URL and secret key
+   ```
 
-## 📚 Table of Contents
+4. **Set up database**
+   ```bash
+   # For development with SQLite (in .env):
+   # DATABASE_URL="sqlite+aiosqlite:///./goodEats.db"
+   
+   # For production with PostgreSQL:
+   # DATABASE_URL="postgresql+asyncpg://username:password@localhost/goodEats_db"
+   
+   # Run migrations
+   alembic upgrade head
+   ```
 
-- [What is Context Engineering?](#what-is-context-engineering)
-- [Template Structure](#template-structure)
-- [Step-by-Step Guide](#step-by-step-guide)
-- [Writing Effective INITIAL.md Files](#writing-effective-initialmd-files)
-- [The PRP Workflow](#the-prp-workflow)
-- [Using Examples Effectively](#using-examples-effectively)
-- [Best Practices](#best-practices)
+5. **Start the API server**
+   ```bash
+   uvicorn app.main:app --reload --port 8000
+   ```
 
-## What is Context Engineering?
+6. **Access the API**
+   - API Documentation: http://localhost:8000/docs
+   - API Root: http://localhost:8000/
+   - Health Check: http://localhost:8000/health
 
-Context Engineering represents a paradigm shift from traditional prompt engineering:
+## 📚 API Documentation
 
-### Prompt Engineering vs Context Engineering
+Once the backend is running, visit http://localhost:8000/docs for interactive API documentation.
 
-**Prompt Engineering:**
-- Focuses on clever wording and specific phrasing
-- Limited to how you phrase a task
-- Like giving someone a sticky note
+### Key Endpoints
 
-**Context Engineering:**
-- A complete system for providing comprehensive context
-- Includes documentation, examples, rules, patterns, and validation
-- Like writing a full screenplay with all the details
+- **Authentication**
+  - `POST /auth/register` - Register new user
+  - `POST /auth/login` - User login
+  - `GET /auth/me` - Get current user info
 
-### Why Context Engineering Matters
+- **Recipes**
+  - `GET /recipes/` - List recipes with filtering
+  - `POST /recipes/` - Create new recipe
+  - `GET /recipes/{id}` - Get recipe details
+  - `PUT /recipes/{id}` - Update recipe
+  - `DELETE /recipes/{id}` - Delete recipe
 
-1. **Reduces AI Failures**: Most agent failures aren't model failures - they're context failures
-2. **Ensures Consistency**: AI follows your project patterns and conventions
-3. **Enables Complex Features**: AI can handle multi-step implementations with proper context
-4. **Self-Correcting**: Validation loops allow AI to fix its own mistakes
+- **Tags**
+  - `GET /tags/` - List all tags
+  - `GET /tags/popular` - Get popular tags by category
+  - `POST /tags/` - Create new tag
 
-## Template Structure
+- **Votes**
+  - `POST /votes/recipes/{id}` - Vote on recipe
+  - `GET /votes/recipes/{id}` - Get vote status
+  - `DELETE /votes/recipes/{id}` - Remove vote
 
-```
-context-engineering-intro/
-├── .claude/
-│   ├── commands/
-│   │   ├── generate-prp.md    # Generates comprehensive PRPs
-│   │   └── execute-prp.md     # Executes PRPs to implement features
-│   └── settings.local.json    # Claude Code permissions
-├── PRPs/
-│   ├── templates/
-│   │   └── prp_base.md       # Base template for PRPs
-│   └── EXAMPLE_multi_agent_prp.md  # Example of a complete PRP
-├── examples/                  # Your code examples (critical!)
-├── CLAUDE.md                 # Global rules for AI assistant
-├── INITIAL.md               # Template for feature requests
-├── INITIAL_EXAMPLE.md       # Example feature request
-└── README.md                # This file
-```
-
-This template doesn't focus on RAG and tools with context engineering because I have a LOT more in store for that soon. ;)
-
-## Step-by-Step Guide
-
-### 1. Set Up Global Rules (CLAUDE.md)
-
-The `CLAUDE.md` file contains project-wide rules that the AI assistant will follow in every conversation. The template includes:
-
-- **Project awareness**: Reading planning docs, checking tasks
-- **Code structure**: File size limits, module organization
-- **Testing requirements**: Unit test patterns, coverage expectations
-- **Style conventions**: Language preferences, formatting rules
-- **Documentation standards**: Docstring formats, commenting practices
-
-**You can use the provided template as-is or customize it for your project.**
-
-### 2. Create Your Initial Feature Request
-
-Edit `INITIAL.md` to describe what you want to build:
-
-```markdown
-## FEATURE:
-[Describe what you want to build - be specific about functionality and requirements]
-
-## EXAMPLES:
-[List any example files in the examples/ folder and explain how they should be used]
-
-## DOCUMENTATION:
-[Include links to relevant documentation, APIs, or MCP server resources]
-
-## OTHER CONSIDERATIONS:
-[Mention any gotchas, specific requirements, or things AI assistants commonly miss]
-```
-
-**See `INITIAL_EXAMPLE.md` for a complete example.**
-
-### 3. Generate the PRP
-
-PRPs (Product Requirements Prompts) are comprehensive implementation blueprints that include:
-
-- Complete context and documentation
-- Implementation steps with validation
-- Error handling patterns
-- Test requirements
-
-They are similar to PRDs (Product Requirements Documents) but are crafted more specifically to instruct an AI coding assistant.
-
-Run in Claude Code:
-```bash
-/generate-prp INITIAL.md
-```
-
-**Note:** The slash commands are custom commands defined in `.claude/commands/`. You can view their implementation:
-- `.claude/commands/generate-prp.md` - See how it researches and creates PRPs
-- `.claude/commands/execute-prp.md` - See how it implements features from PRPs
-
-The `$ARGUMENTS` variable in these commands receives whatever you pass after the command name (e.g., `INITIAL.md` or `PRPs/your-feature.md`).
-
-This command will:
-1. Read your feature request
-2. Research the codebase for patterns
-3. Search for relevant documentation
-4. Create a comprehensive PRP in `PRPs/your-feature-name.md`
-
-### 4. Execute the PRP
-
-Once generated, execute the PRP to implement your feature:
+## 🧪 Testing
 
 ```bash
-/execute-prp PRPs/your-feature-name.md
+# Run tests (when implemented)
+cd backend
+pytest
+
+# Run with coverage
+pytest --cov=app --cov-report=html
 ```
 
-The AI coding assistant will:
-1. Read all context from the PRP
-2. Create a detailed implementation plan
-3. Execute each step with validation
-4. Run tests and fix any issues
-5. Ensure all success criteria are met
+## 🔧 Configuration
 
-## Writing Effective INITIAL.md Files
+Key environment variables in `.env`:
 
-### Key Sections Explained
+```env
+# Security (REQUIRED)
+SECRET_KEY="your-super-secret-key"
+DATABASE_URL="postgresql+asyncpg://user:pass@localhost/db"
 
-**FEATURE**: Be specific and comprehensive
-- ❌ "Build a web scraper"
-- ✅ "Build an async web scraper using BeautifulSoup that extracts product data from e-commerce sites, handles rate limiting, and stores results in PostgreSQL"
-
-**EXAMPLES**: Leverage the examples/ folder
-- Place relevant code patterns in `examples/`
-- Reference specific files and patterns to follow
-- Explain what aspects should be mimicked
-
-**DOCUMENTATION**: Include all relevant resources
-- API documentation URLs
-- Library guides
-- MCP server documentation
-- Database schemas
-
-**OTHER CONSIDERATIONS**: Capture important details
-- Authentication requirements
-- Rate limits or quotas
-- Common pitfalls
-- Performance requirements
-
-## The PRP Workflow
-
-### How /generate-prp Works
-
-The command follows this process:
-
-1. **Research Phase**
-   - Analyzes your codebase for patterns
-   - Searches for similar implementations
-   - Identifies conventions to follow
-
-2. **Documentation Gathering**
-   - Fetches relevant API docs
-   - Includes library documentation
-   - Adds gotchas and quirks
-
-3. **Blueprint Creation**
-   - Creates step-by-step implementation plan
-   - Includes validation gates
-   - Adds test requirements
-
-4. **Quality Check**
-   - Scores confidence level (1-10)
-   - Ensures all context is included
-
-### How /execute-prp Works
-
-1. **Load Context**: Reads the entire PRP
-2. **Plan**: Creates detailed task list using TodoWrite
-3. **Execute**: Implements each component
-4. **Validate**: Runs tests and linting
-5. **Iterate**: Fixes any issues found
-6. **Complete**: Ensures all requirements met
-
-See `PRPs/EXAMPLE_multi_agent_prp.md` for a complete example of what gets generated.
-
-## Using Examples Effectively
-
-The `examples/` folder is **critical** for success. AI coding assistants perform much better when they can see patterns to follow.
-
-### What to Include in Examples
-
-1. **Code Structure Patterns**
-   - How you organize modules
-   - Import conventions
-   - Class/function patterns
-
-2. **Testing Patterns**
-   - Test file structure
-   - Mocking approaches
-   - Assertion styles
-
-3. **Integration Patterns**
-   - API client implementations
-   - Database connections
-   - Authentication flows
-
-4. **CLI Patterns**
-   - Argument parsing
-   - Output formatting
-   - Error handling
-
-### Example Structure
-
-```
-examples/
-├── README.md           # Explains what each example demonstrates
-├── cli.py             # CLI implementation pattern
-├── agent/             # Agent architecture patterns
-│   ├── agent.py      # Agent creation pattern
-│   ├── tools.py      # Tool implementation pattern
-│   └── providers.py  # Multi-provider pattern
-└── tests/            # Testing patterns
-    ├── test_agent.py # Unit test patterns
-    └── conftest.py   # Pytest configuration
+# Optional
+DEBUG=true
+CORS_ORIGINS=["http://localhost:3000"]
+JWT_EXPIRATION_HOURS=24
 ```
 
-## Best Practices
+## 🏷️ Database Schema
 
-### 1. Be Explicit in INITIAL.md
-- Don't assume the AI knows your preferences
-- Include specific requirements and constraints
-- Reference examples liberally
+### Core Models
 
-### 2. Provide Comprehensive Examples
-- More examples = better implementations
-- Show both what to do AND what not to do
-- Include error handling patterns
+- **Users** - Authentication and profile information
+- **Recipes** - Recipe content with JSON ingredients for shopping lists
+- **Tags** - Categorized tags for filtering (dietary, cuisine, etc.)
+- **Votes** - Upvote/downvote system with composite primary key
+- **Recipe_Tags** - Many-to-many relationship between recipes and tags
 
-### 3. Use Validation Gates
-- PRPs include test commands that must pass
-- AI will iterate until all validations succeed
-- This ensures working code on first try
+### Key Features
 
-### 4. Leverage Documentation
-- Include official API docs
-- Add MCP server resources
-- Reference specific documentation sections
+- **Async Operations** - All database operations use async/await
+- **Proper Indexes** - Optimized for filtering and search queries
+- **Vote Aggregation** - Denormalized vote counts for performance
+- **JSON Ingredients** - Structured ingredient data for shopping lists
 
-### 5. Customize CLAUDE.md
-- Add your conventions
-- Include project-specific rules
-- Define coding standards
+## 🌐 Deployment
 
-## Resources
+### Development
+```bash
+uvicorn app.main:app --reload --port 8000
+```
 
-- [Claude Code Documentation](https://docs.anthropic.com/en/docs/claude-code)
-- [Context Engineering Best Practices](https://www.philschmid.de/context-engineering)
+### Production (with Docker)
+```bash
+# Build and run (when Dockerfile is implemented)
+docker build -t goodEats-api .
+docker run -p 8000:8000 goodEats-api
+```
+
+## 🛣️ Roadmap
+
+### Phase 1 - Core Backend ✅
+- [x] Authentication system
+- [x] Recipe CRUD operations
+- [x] Tag system with categories
+- [x] Voting functionality
+- [x] Advanced filtering and search
+
+### Phase 2 - Enhanced Features
+- [ ] Shopping list generation
+- [ ] User favorites and bookmarks
+- [ ] Recipe import from URLs
+- [ ] Image upload support
+- [ ] Recipe rating system
+
+### Phase 3 - Frontend PWA
+- [ ] React application with TypeScript
+- [ ] Progressive Web App features
+- [ ] Offline recipe viewing
+- [ ] Push notifications
+- [ ] Mobile-responsive design
+
+### Phase 4 - Advanced Features
+- [ ] Social features (following users)
+- [ ] Recipe collections and meal planning
+- [ ] Nutritional information
+- [ ] Recipe suggestions/recommendations
+- [ ] Chrome extension for recipe import
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## 🙏 Acknowledgments
+
+- FastAPI for the excellent web framework
+- SQLAlchemy for robust ORM capabilities
+- Pydantic for data validation
+- The open source community for inspiring this project
+
+---
+
+**Built with ❤️ for food lovers and home cooks everywhere** 🍳
