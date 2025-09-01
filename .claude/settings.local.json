@@ -27,7 +27,16 @@
       "mcp__archon__get_available_sources",
       "WebSearch",
       "mcp__archon__create_task",
-      "mcp__archon__update_task"
+      "mcp__archon__update_task",
+      "mcp__archon__get_task",
+      "Bash(PYTHONPATH=/home/todonnell/Projects/GoodEats/backend python3 -m pytest --version)",
+      "Bash(export PYTHONPATH=$PWD)",
+      "Bash(/home/todonnell/.local/bin/pytest --version)",
+      "Bash(PYTHONPATH=$PWD /home/todonnell/.local/bin/pytest tests/test_auth.py::TestUserRegistration::test_register_user_success -v)",
+      "Bash(PYTHONPATH=$PWD SECRET_KEY=test-secret-key-for-testing DATABASE_URL=sqlite+aiosqlite:///./test.db DEBUG=true /home/todonnell/.local/bin/pytest tests/test_auth.py::TestUserRegistration::test_register_user_success -v)",
+      "Bash(pip3 install:*)",
+      "Bash(PYTHONPATH=$PWD SECRET_KEY=test-secret-key-for-testing DATABASE_URL=sqlite+aiosqlite:///./test.db DEBUG=true /home/todonnell/.local/bin/pytest tests/test_auth.py::TestUserRegistration::test_register_user_success -v -s)",
+      "Bash(PYTHONPATH=$PWD SECRET_KEY=test-secret-key-for-testing DATABASE_URL=sqlite+aiosqlite:///./test.db DEBUG=true /home/todonnell/.local/bin/pytest --collect-only)"
     ],
     "deny": []
   }

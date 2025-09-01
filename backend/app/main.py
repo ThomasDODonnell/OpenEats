@@ -23,6 +23,7 @@ from app.api.users import router as users_router
 from app.api.recipes import router as recipes_router
 from app.api.tags import router as tags_router
 from app.api.votes import router as votes_router
+from app.api.shopping_lists import router as shopping_lists_router
 
 
 @asynccontextmanager
@@ -164,6 +165,12 @@ app.include_router(
     votes_router,
     prefix="/votes",
     tags=["votes"]
+)
+
+app.include_router(
+    shopping_lists_router,
+    prefix="/shopping-lists",
+    tags=["shopping-lists"]
 )
 
 

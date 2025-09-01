@@ -44,11 +44,10 @@ A modern Progressive Web Application for recipe management with social features,
 - [x] **Tag System** - Categorized tags with popularity tracking
 - [x] **Voting System** - Atomic upvote/downvote with aggregation
 - [x] **Search & Filter** - Multi-criteria recipe filtering
+- [x] **Shopping List API** - Ingredient aggregation with smart merging
 - [x] **API Documentation** - Interactive OpenAPI/Swagger docs
 
 ### 🔄 In Progress
-
-- [ ] Shopping list generation from recipes
 - [ ] Frontend React application
 - [ ] PWA configuration and service workers
 - [ ] Docker containerization
@@ -158,6 +157,14 @@ Once the backend is running, visit http://localhost:8000/docs for interactive AP
   - `POST /votes/recipes/{id}` - Vote on recipe
   - `GET /votes/recipes/{id}` - Get vote status
   - `DELETE /votes/recipes/{id}` - Remove vote
+
+- **Shopping Lists**
+  - `POST /shopping-lists/` - Create shopping list from recipes
+  - `GET /shopping-lists/` - Get user's shopping lists
+  - `GET /shopping-lists/{id}` - Get shopping list with grouping
+  - `PUT /shopping-lists/{id}` - Update shopping list
+  - `DELETE /shopping-lists/{id}` - Delete shopping list
+  - `POST /shopping-lists/generate` - Preview shopping list without saving
 
 ## 🧪 Testing
 

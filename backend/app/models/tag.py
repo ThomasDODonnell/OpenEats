@@ -2,7 +2,7 @@
 Tag model for recipe categorization and filtering.
 """
 from typing import List, TYPE_CHECKING
-from sqlalchemy import String, Table, ForeignKey
+from sqlalchemy import String, Table, Column, ForeignKey, Integer
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.config.database import Base
@@ -14,8 +14,8 @@ if TYPE_CHECKING:
 recipe_tags = Table(
     "recipe_tags",
     Base.metadata,
-    mapped_column("recipe_id", ForeignKey("recipes.id"), primary_key=True),
-    mapped_column("tag_id", ForeignKey("tags.id"), primary_key=True),
+    Column("recipe_id", Integer, ForeignKey("recipes.id"), primary_key=True),
+    Column("tag_id", Integer, ForeignKey("tags.id"), primary_key=True),
 )
 
 
