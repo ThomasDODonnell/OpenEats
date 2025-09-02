@@ -33,6 +33,9 @@ class ShoppingList(Base):
     # Aggregated ingredients with quantities
     ingredients: Mapped[List[dict]] = mapped_column(JSON, nullable=False)
     
+    # Custom ingredients added manually by user
+    custom_ingredients: Mapped[List[dict]] = mapped_column(JSON, nullable=False, default=list)
+    
     # Timestamps
     created_at: Mapped[datetime] = mapped_column(DateTime, default=func.now(), nullable=False)
     updated_at: Mapped[datetime] = mapped_column(

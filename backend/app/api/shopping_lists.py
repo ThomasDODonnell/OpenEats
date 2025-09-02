@@ -66,7 +66,7 @@ async def create_shopping_list(
                 select(Recipe).where(
                     and_(
                         Recipe.id.in_(shopping_list_data.recipe_ids),
-                        Recipe.user_id == current_user.id
+                        Recipe.author_id == current_user.id
                     )
                 )
             )

@@ -14,11 +14,11 @@ from app.models.user import User
 from app.schemas.user import TokenData
 
 # Security scheme for JWT bearer tokens
-security = HTTPBearer()
+security = HTTPBearer(auto_error=False)
 
 
 async def get_current_user_token(
-    credentials: HTTPAuthorizationCredentials = Depends(security)
+    credentials: Optional[HTTPAuthorizationCredentials] = Depends(security)
 ) -> TokenData:
     """
     Validate JWT token and extract user information.
@@ -32,6 +32,9 @@ async def get_current_user_token(
     Raises:
         AuthenticationError: If token is invalid or expired.
     """
+    if credentials is None:
+        raise AuthenticationError("Authorization header required")
+    
     try:
         payload = verify_token(credentials.credentials)
         user_id = payload.get("sub")

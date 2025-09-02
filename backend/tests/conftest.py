@@ -126,7 +126,7 @@ async def test_user_token(test_user: User) -> str:
     """
     Create a valid JWT token for the test user.
     """
-    access_token_expires = timedelta(minutes=settings.JWT_EXPIRATION_MINUTES)
+    access_token_expires = timedelta(hours=settings.JWT_EXPIRATION_HOURS)
     return create_access_token(
         data={"sub": str(test_user.id)},
         expires_delta=access_token_expires

@@ -62,6 +62,10 @@ async def register_user(
         
         return new_user
     
+    except ConflictError:
+        await db.rollback()
+        raise
+    
     except IntegrityError:
         await db.rollback()
         raise ConflictError("Email already registered")
